@@ -1,4 +1,5 @@
 import pandas as pd
+import shutil
 import os
 
 
@@ -28,7 +29,6 @@ def parse_first_data(path_to_txt=r'Data/Raw data/Выборка_практика
 
 
 def parse_second_data(path_data=r'Data/Raw data/Silver hallmarks'):
-
     data_frame = pd.DataFrame(columns=['folder', 'original_image', 'highlighted_image', 'city', 'year', 'url'])
     original, highlight = None, None
 
@@ -37,7 +37,6 @@ def parse_second_data(path_data=r'Data/Raw data/Silver hallmarks'):
             if "original" in file:
                 original = file
             if ".txt" in file:
-
                 with open(os.path.join(path_data, folder, file), 'r') as txt:
                     city, year = txt.readline().split()
 
@@ -62,6 +61,38 @@ def parse_second_data(path_data=r'Data/Raw data/Silver hallmarks'):
     return data_frame
 
 
+def coping_images_into_common_directory():
+    path_to_first_csv = 'Data/data_frame_first.csv'
+    path_to_second_csv = 'Data/data_frame_second.csv'
+    path_to_final_directory = 'Data/Dataset/images/'
+    path_to_first_data = 'Data/Raw data/Выборка_практика_Тлепин/Оригинал'
+    path_to_second_data = 'Data/Raw data/Silver hallmarks'
+
+    if not os.path.exists(r'Data/Dataset'):
+        os.makedirs(r'Data/Dataset')
+
+    # Process first data_frame
+    try:
+        shutil.copytree(path_to_first_data, path_to_final_directory)
+    except FileExistsError:
+        pass
+        # Directory already exists, copying not finished
+
+    # Process second data_frame
+    data_frame2 = pd.read_csv(path_to_second_csv)
+
+    for i, row in data_frame2.iterrows():
+        folder, original_name = row['folder'], row['original_image']
+        path_to_image = os.path.join(folder, original_name)
+
+        shutil.copy(
+            os.path.join(path_to_second_data, path_to_image),
+            os.path.join(path_to_final_directory, f'{folder}_{original_name}')
+        )
+
+    return 0
+
+
 if __name__ == '__main__':
     dataframe1 = parse_first_data()
     print(dataframe1)
@@ -71,4 +102,16 @@ if __name__ == '__main__':
     print(dataframe2)
     dataframe2.to_csv(r'Data\data_frame_second.csv')
 
+    # coping_images_into_common_directory()
 
+    dataframe1 = pd.read_csv('Data/data_frame_first.csv')
+    dataframe2 = pd.read_csv('Data/data_frame_second.csv')
+
+    dataframe2['image_name'] = dataframe2['folder'] + '_' + dataframe2['original_image']
+
+    dataframe = dataframe1[['image_name', 'city', 'year']].append(
+        dataframe2[['image_name', 'city', 'year']], ignore_index=True)
+
+    print(dataframe)
+
+    dataframe.to_csv('Data/annotation.csv')
