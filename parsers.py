@@ -114,4 +114,4 @@ if __name__ == '__main__':
 
     print(dataframe)
 
-    dataframe.to_csv('Data/annotation.csv')
+    dataframe.to_csv('Data/annotation_raw.csv')
