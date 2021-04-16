@@ -3,7 +3,7 @@ import shutil
 import os
 
 
-def parse_first_data(path_to_txt=r'Data/Raw data/Выборка_практика_Тлепин/Номер_Дата.txt'):
+def parse_first_data(path_to_txt=r'Data/Initial_datasets/Выборка_практика_Тлепин/Номер_Дата.txt'):
     data_frame = pd.DataFrame(columns=['image_name', 'city', 'year', 'url'])
 
     with open(path_to_txt, 'r') as txt:
@@ -28,7 +28,7 @@ def parse_first_data(path_to_txt=r'Data/Raw data/Выборка_практика
         return data_frame
 
 
-def parse_second_data(path_data=r'Data/Raw data/Silver hallmarks'):
+def parse_second_data(path_data=r'Data/Initial_datasets/Silver hallmarks'):
     data_frame = pd.DataFrame(columns=['folder', 'original_image', 'highlighted_image', 'city', 'year', 'url'])
     original, highlight = None, None
 
@@ -62,11 +62,11 @@ def parse_second_data(path_data=r'Data/Raw data/Silver hallmarks'):
 
 
 def coping_images_into_common_directory():
-    path_to_first_csv = 'Data/data_frame_first.csv'
-    path_to_second_csv = 'Data/data_frame_second.csv'
+    path_to_first_csv = 'Data/Initial_datasets/data_frame_first.csv'
+    path_to_second_csv = 'Data/Initial_datasets/data_frame_second.csv'
     path_to_final_directory = 'Data/Dataset/images/'
-    path_to_first_data = 'Data/Raw data/Выборка_практика_Тлепин/Оригинал'
-    path_to_second_data = 'Data/Raw data/Silver hallmarks'
+    path_to_first_data = 'Data/Initial_datasets/Выборка_практика_Тлепин/Оригинал'
+    path_to_second_data = 'Data/Initial_datasets/Silver hallmarks'
 
     if not os.path.exists(r'Data/Dataset'):
         os.makedirs(r'Data/Dataset')
@@ -104,8 +104,8 @@ if __name__ == '__main__':
 
     # coping_images_into_common_directory()
 
-    dataframe1 = pd.read_csv('Data/data_frame_first.csv')
-    dataframe2 = pd.read_csv('Data/data_frame_second.csv')
+    dataframe1 = pd.read_csv('Data/Initial_datasets/data_frame_first.csv')
+    dataframe2 = pd.read_csv('Data/Initial_datasets/data_frame_second.csv')
 
     dataframe2['image_name'] = dataframe2['folder'] + '_' + dataframe2['original_image']
 
