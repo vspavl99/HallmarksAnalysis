@@ -41,5 +41,5 @@ def txt_to_csv(path_to_txt):
 
     return data
 
-
+# test
 print(txt_to_csv('utils/result.txt'))
