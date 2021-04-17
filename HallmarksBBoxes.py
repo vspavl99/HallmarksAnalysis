@@ -23,8 +23,8 @@ def created_hallmarks_images(destination_path: str):
 
     :return: Don't return anything, Just save images into local disk
     """
-    bbox_dataframe = pd.read_csv('Data/bounding_boxes.csv')
-    city_year_dataframe = pd.read_csv('Data/city_year_val.csv')
+    bbox_dataframe = pd.read_csv('Data/Detection/bounding_boxes.csv')
+    city_year_dataframe = pd.read_csv('Data/Classification/city_year.csv')
 
     for _, row in city_year_dataframe.iterrows():
 
@@ -43,4 +43,4 @@ def created_hallmarks_images(destination_path: str):
 
 if __name__ == '__main__':
 
-    created_hallmarks_images('Data/Dataset/val')
+    created_hallmarks_images('Data/Classification/images')
