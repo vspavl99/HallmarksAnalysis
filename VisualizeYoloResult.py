@@ -85,6 +85,8 @@ def draw_boxes(path_to_image, percent, left_x, top_y, width, height):
 if __name__ == '__main__':
     result_csv = txt_to_csv('utils/result.txt')
 
+    # result_csv.to_csv('Data/bounding_boxes_predicted_yolo.csv')
+
     for path in result_csv['ImagePath'].unique():
         sub_data = result_csv[result_csv['ImagePath'] == path]
         for num, row in sub_data.iterrows():
