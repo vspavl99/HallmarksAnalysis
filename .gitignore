@@ -136,3 +136,5 @@ utils/result.txt
 /.idea/inspectionProfiles/profiles_settings.xml
 /.idea/inspectionProfiles/Project_Default.xml
 /.idea/vcs.xml
+/Data/Detection/yolov4/data/train.zip
+/Data/Detection/yolov4/data/val.zip

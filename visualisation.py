@@ -34,11 +34,11 @@ def draw_text_with_background(image: np.ndarray, text: str, position: tuple) -> 
     return image
 
 
-def draw_boxes(path_to_image: str, percent: str, left_x: int, top_y: int,
+def draw_boxes(image: np.ndarray, percent: str, left_x: int, top_y: int,
                width: int, height: int, with_percent: bool = True) -> np.ndarray:
     """ Draw bounding boxes with class name on image
 
-    :param path_to_image: Path from current content root to image
+    :param image: Original image
     :param percent: Percent of confidence
     :param left_x: x-coordinate of top left corner of bounding box
     :param top_y: y-coordinate of top left corner of bounding box
@@ -47,12 +47,10 @@ def draw_boxes(path_to_image: str, percent: str, left_x: int, top_y: int,
     :param with_percent: boolean param
     :return: Image with bounding box and class name of object
     """
-    image = cv2.imread(path_to_image)
-    assert image is not None, "Fail! Image don't read"
 
     text = f'Hallmark: {percent}' if with_percent else 'Hallmark'
 
     image = draw_text_with_background(image, text, (left_x, top_y))
-    image = cv2.rectangle(image, (left_x, top_y), (left_x + width, top_y + height), (255, 0, 255))
+    image = cv2.rectangle(image, (left_x, top_y), (left_x + width, top_y + height), (255, 0, 255), 2)
 
     return image

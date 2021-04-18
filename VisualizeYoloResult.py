@@ -1,4 +1,7 @@
+import os
+import cv2
 import pandas as pd
+import matplotlib.pyplot as plt
 from visualisation import draw_boxes
 
 
@@ -66,7 +69,24 @@ if __name__ == '__main__':
 
     for path in result_csv['ImagePath'].unique():
         sub_data = result_csv[result_csv['ImagePath'] == path]
-        for num, row in sub_data.iterrows():
-            draw_boxes(*row)
 
+        image = cv2.imread(os.path.join('Data/Detection/yolov4/data/obj', path.split('/')[-1]))
+        assert image is not None, "Error! Image not read!"
+
+        for num, row in sub_data.iterrows():
+            params = {
+                'image': image,
+                'percent': row['confidence'],
+                'left_x': row['left_x'],
+                'top_y': row['top_y'],
+                'width': row['width'],
+                'height': row['height']
+            }
+            image = draw_boxes(**params)
+
+        cv2.imwrite(os.path.join('Data/Detection/yolov4/data/val_result', path.split('/')[-1]), image)
+
+
+            # plt.imshow(image)
+            # plt.show()
 
