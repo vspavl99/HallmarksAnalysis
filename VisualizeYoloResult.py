@@ -65,7 +65,7 @@ if __name__ == '__main__':
 
     result_csv = txt_to_csv('utils/result.txt')
 
-    # result_csv.to_csv('Data/bounding_boxes_predicted_yolo.csv')
+    result_csv.to_csv('Data/Detection/bounding_boxes_predicted_yolo.csv')
 
     for path in result_csv['ImagePath'].unique():
         sub_data = result_csv[result_csv['ImagePath'] == path]
@@ -85,8 +85,4 @@ if __name__ == '__main__':
             image = draw_boxes(**params)
 
         cv2.imwrite(os.path.join('Data/Detection/yolov4/data/val_result', path.split('/')[-1]), image)
-
-
-            # plt.imshow(image)
-            # plt.show()
 
