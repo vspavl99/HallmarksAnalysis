@@ -31,7 +31,7 @@ filename,file_size,file_attributes,region_count,region_id,region_shape_attribute
 30_original.jpg,128049,"{}",1,0,"{""name"":""rect"",""x"":315,""y"":358,""width"":330,""height"":143}","{}"
 31_original.jpg,68448,"{}",1,0,"{""name"":""rect"",""x"":283,""y"":134,""width"":133,""height"":69}","{}"
 32_original.jpg,86373,"{}",1,0,"{""name"":""rect"",""x"":190,""y"":270,""width"":184,""height"":121}","{}"
-33_originial.jpg,74129,"{}",1,0,"{""name"":""rect"",""x"":181,""y"":195,""width"":131,""height"":180}","{}"
+33_original.jpg,74129,"{}",1,0,"{""name"":""rect"",""x"":181,""y"":195,""width"":131,""height"":180}","{}"
 34_original.jpg,64766,"{}",1,0,"{""name"":""rect"",""x"":142,""y"":142,""width"":81,""height"":225}","{}"
 35_original.jpg,70923,"{}",1,0,"{""name"":""rect"",""x"":274,""y"":306,""width"":122,""height"":73}","{}"
 36_original.jpg,58821,"{}",1,0,"{""name"":""rect"",""x"":186,""y"":226,""width"":249,""height"":69}","{}"

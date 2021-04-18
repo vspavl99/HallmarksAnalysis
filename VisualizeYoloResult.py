@@ -70,7 +70,7 @@ if __name__ == '__main__':
     for path in result_csv['ImagePath'].unique():
         sub_data = result_csv[result_csv['ImagePath'] == path]
 
-        image = cv2.imread(os.path.join('Data/Detection/yolov4/data/obj', path.split('/')[-1]))
+        image = cv2.imread(os.path.join('Data/Detection/yolov4/data/images', path.split('/')[-1]))
         assert image is not None, "Error! Image not read!"
 
         for num, row in sub_data.iterrows():
