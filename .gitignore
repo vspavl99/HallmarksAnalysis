@@ -138,4 +138,4 @@ dmypy.json
 /Data/Detection/yolov4/data/train.zip
 /Data/Detection/yolov4/data/val.zip
 /Data/Classification.zip
-/Data/Detection/weights/yolov4-obj_best.weights
+/Models/Detection/weights/yolov4-obj_best.weights
