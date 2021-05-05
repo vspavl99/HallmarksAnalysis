@@ -3,7 +3,7 @@ import cv2
 import matplotlib.pyplot as plt
 
 
-PATH_TO_IMAGES = r'../Data/ClassificationYear/hallmarks/images/train'
+PATH_TO_IMAGES = r'../Data/ClassificationYear/hallmarks/images/val'
 
 
 def get_letter_coordinates(image_name: str) -> list:
@@ -48,5 +48,6 @@ for image_name in os.listdir(PATH_TO_IMAGES):
     # plt.imshow(letter)
 
     cv2.imwrite(os.path.join(PATH_TO_IMAGES.replace('images', 'letters'), image_name), letter)
+    print(os.path.join(PATH_TO_IMAGES.replace('images', 'letters'), image_name))
     # plt.show()
 
