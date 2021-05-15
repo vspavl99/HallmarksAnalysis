@@ -19,7 +19,7 @@ def extract_hallmark_from_image(original_image: np.ndarray, bbox: tuple) -> np.n
 
 
 def created_hallmarks_images(destination_path: str):
-    """ Cropping hallmarks from all images in dataset and save them into separate folder
+    """ Cropping AdditionalData from all images in dataset and save them into separate folder
 
     :return: Don't return anything, Just save images into local disk
     """
@@ -28,7 +28,7 @@ def created_hallmarks_images(destination_path: str):
 
     for _, row in city_year_dataframe.iterrows():
 
-        image = cv2.imread(os.path.join('../Data/Dataset/images/', row['ImageName']))
+        image = cv2.imread(os.path.join('../Data/DatasetOriginal/images/', row['ImageName']))
         assert image is not None, f"Fail! Image not found {row['ImageName']}"
 
         bounding_boxes = bbox_dataframe[bbox_dataframe['ImageName'] == row['ImageName']]

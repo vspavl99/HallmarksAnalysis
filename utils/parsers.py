@@ -28,7 +28,7 @@ def parse_first_data(path_to_txt=r'Data/Unpreparated datasets/Выборка_п�
         return data_frame
 
 
-def parse_second_data(path_data=r'Data/Unpreparated datasets/Silver hallmarks'):
+def parse_second_data(path_data=r'Data/Unpreparated datasets/Silver AdditionalData'):
     data_frame = pd.DataFrame(columns=['folder', 'original_image', 'highlighted_image', 'city', 'year', 'url'])
     original, highlight = None, None
 
@@ -62,14 +62,14 @@ def parse_second_data(path_data=r'Data/Unpreparated datasets/Silver hallmarks'):
 
 
 def coping_images_into_common_directory():
-    path_to_first_csv = '../Data/Dataset/Unpreparated datasets/data_frame_first.csv'
-    path_to_second_csv = '../Data/Dataset/Unpreparated datasets/data_frame_second.csv'
-    path_to_final_directory = '../Data/Dataset/images/'
-    path_to_first_data = '../Data/Dataset/Unpreparated datasets/Выборка_практика_Тлепин/Оригинал'
-    path_to_second_data = '../Data/Dataset/Unpreparated datasets/Silver hallmarks'
+    path_to_first_csv = '../Data/DatasetOriginal/Unpreparated datasets/data_frame_first.csv'
+    path_to_second_csv = '../Data/DatasetOriginal/Unpreparated datasets/data_frame_second.csv'
+    path_to_final_directory = '../Data/DatasetOriginal/images/'
+    path_to_first_data = '../Data/DatasetOriginal/Unpreparated datasets/Выборка_практика_Тлепин/Оригинал'
+    path_to_second_data = '../Data/DatasetOriginal/Unpreparated datasets/Silver hallmarks'
 
-    if not os.path.exists(r'../Data/Dataset'):
-        os.makedirs(r'../Data/Dataset')
+    if not os.path.exists(r'../Data/DatasetOriginal'):
+        os.makedirs(r'../Data/DatasetOriginal')
 
     # Process first data_frame
     try:
@@ -104,8 +104,8 @@ if __name__ == '__main__':
 
     # coping_images_into_common_directory()
 
-    dataframe1 = pd.read_csv('../Data/Dataset/Unpreparated datasets/data_frame_first.csv')
-    dataframe2 = pd.read_csv('../Data/Dataset/Unpreparated datasets/data_frame_second.csv')
+    dataframe1 = pd.read_csv('../Data/DatasetOriginal/Unpreparated datasets/data_frame_first.csv')
+    dataframe2 = pd.read_csv('../Data/DatasetOriginal/Unpreparated datasets/data_frame_second.csv')
 
     dataframe2['image_name'] = dataframe2['folder'] + '_' + dataframe2['original_image']
 

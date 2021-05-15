@@ -3,7 +3,7 @@ import cv2
 import matplotlib.pyplot as plt
 
 
-PATH_TO_IMAGES = r'../Data/ClassificationYear/hallmarks/images/val'
+PATH_TO_IMAGES = r'../Data/ClassificationYear/AdditionalData/images/val'
 
 
 def get_letter_coordinates(image_name: str) -> list:

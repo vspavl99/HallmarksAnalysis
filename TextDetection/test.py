@@ -116,7 +116,7 @@ if __name__ == "__main__":
     outputLayers.append("feature_fusion/concat_3")
 
     # Open a video file or an image file or a camera stream
-    cap = cv.VideoCapture('../Data/Dataset/images/55_original.jpg')
+    cap = cv.VideoCapture('../Data/DatasetOriginal/images/55_original.jpg')
 
     while True:
         # Read frame
