@@ -139,3 +139,5 @@ dmypy.json
 /Data/Detection/yolov4/data/val.zip
 /Data/Classification.zip
 /Models/Detection/weights/yolov4-obj_best.weights
+/Data/ClassificationYear/Chars74kDataset.zip
+/.idea/sqldialects.xml

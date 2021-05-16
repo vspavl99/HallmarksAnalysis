@@ -3,16 +3,16 @@ import cv2
 import matplotlib.pyplot as plt
 
 
-PATH_TO_IMAGES = r'../Data/ClassificationYear/AdditionalData/images/val'
+PATH_TO_IMAGES = r'../Data/Detection/yolov4/data/images'
 
 
 def get_letter_coordinates(image_name: str) -> list:
     txt_name = image_name.split('.')[0] + '.txt'
     raw_coordinates = []
     line_with_letter_coordinates = ''
-    with open(os.path.join(PATH_TO_IMAGES.replace('images', 'labels'), txt_name), 'r') as txt_file:
+    with open(os.path.join(PATH_TO_IMAGES, txt_name), 'r') as txt_file:
         for line in txt_file.readlines():
-            if line.startswith('3'):
+            if line.startswith('1'):
                 line_with_letter_coordinates = line
                 break
 
@@ -24,6 +24,8 @@ def get_letter_coordinates(image_name: str) -> list:
 
 for image_name in os.listdir(PATH_TO_IMAGES):
     if image_name.startswith('.'):
+        continue
+    if '.txt' in image_name:
         continue
 
     coordinates = get_letter_coordinates(image_name)

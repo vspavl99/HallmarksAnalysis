@@ -20,5 +20,5 @@ data_frame_train, data_frame_val = train_test_split(
 
 # Save the result
 data_frame_train.to_csv('newData_train.csv')
-data_frame_train.to_csv('newData_val.csv')
+data_frame_val.to_csv('newData_val.csv')
 data.to_csv('newData.csv')

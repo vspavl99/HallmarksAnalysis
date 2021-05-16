@@ -82,6 +82,6 @@ def main():
 if __name__ == '__main__':
     annotation = main()
     annotation.to_csv('letters_val.csv')
-    annotation = annotation.drop([i for i in range(9)], axis=0)
+    annotation = annotation.drop([i for i in range(1223)], axis=0)
     annotation.to_csv('letters2_val.csv', index=False)
 
