@@ -33,16 +33,17 @@ def txt_to_csv(path_to_txt: str) -> pd.DataFrame:
     :return: DataFrame
     """
 
-    data = pd.DataFrame(columns=['ImagePath', 'confidence', 'left_x', 'top_y', 'width', 'height'])
+    data = pd.DataFrame(columns=['ImagePath', 'class', 'confidence', 'left_x', 'top_y', 'width', 'height'])
     boxes = []
 
     with open(path_to_txt, 'r') as txt_file:
         for line in txt_file:
 
             if 'Predicted' in line:
-                for percent, left_x, top_y, width, height in boxes:
+                for class_name, percent, left_x, top_y, width, height in boxes:
                     data = data.append({
                             'ImagePath': path_to_image,
+                            'class': class_name,
                             'confidence': percent,
                             'left_x': left_x,
                             'top_y': top_y,
@@ -52,9 +53,15 @@ def txt_to_csv(path_to_txt: str) -> pd.DataFrame:
 
                 boxes = []
                 path_to_image = line.split(':')[0]
-            elif 'hallmark' in line:
+
+            if 'hallmark' in line:
                 sub_line = line[9:-2]
-                boxes.append((parse_bbox_line(sub_line)))
+                boxes.append(('hallmark', *parse_bbox_line(sub_line)))
+
+            if 'letter' in line:
+                sub_line = line[7:-2]
+                boxes.append(('letter', *parse_bbox_line(sub_line)))
+
 
     return data
 
@@ -62,9 +69,9 @@ def txt_to_csv(path_to_txt: str) -> pd.DataFrame:
 if __name__ == '__main__':
     """ This file parse YoloV4 result file into csv format. Then visualize bounding box on image"""
 
-    result_csv = txt_to_csv('result.txt')
+    result_csv = txt_to_csv('result (3).txt')
 
-    result_csv.to_csv('Data/Detection/bounding_boxes_predicted_yolo.csv')
+    result_csv.to_csv('../Data/Detection/bounding_boxes_predicted_2_yolo.csv')
 
     for path in result_csv['ImagePath'].unique():
         sub_data = result_csv[result_csv['ImagePath'] == path]
@@ -75,6 +82,7 @@ if __name__ == '__main__':
         for num, row in sub_data.iterrows():
             params = {
                 'image': image,
+                'class_name': row['class'],
                 'percent': row['confidence'],
                 'left_x': row['left_x'],
                 'top_y': row['top_y'],

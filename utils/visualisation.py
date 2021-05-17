@@ -2,9 +2,11 @@ import cv2
 import numpy as np
 
 
-def draw_text_with_background(image: np.ndarray, text: str, position: tuple) -> np.ndarray:
+def draw_text_with_background(image: np.ndarray, text: str,
+                              position: tuple, rectangle_background_color: tuple = (255, 0, 255)) -> np.ndarray:
     """ Write text with background on image
 
+    :param rectangle_background_color: color of background
     :param image: Image represented in numpy-array format
     :param text: String that should be written on image
     :param position: Coordinate (x, y) of position of the beginning of text
@@ -13,8 +15,6 @@ def draw_text_with_background(image: np.ndarray, text: str, position: tuple) -> 
 
     font_scale = 2.5
     font = cv2.FONT_HERSHEY_PLAIN
-
-    rectangle_background_color = (255, 0, 255)
 
     # get the width and height of the text box
     (text_width, text_height) = cv2.getTextSize(text, font, fontScale=font_scale, thickness=2)[0]
@@ -34,12 +34,13 @@ def draw_text_with_background(image: np.ndarray, text: str, position: tuple) -> 
     return image
 
 
-def draw_boxes(image: np.ndarray, percent: str, left_x: int, top_y: int,
+def draw_boxes(image: np.ndarray, percent: str, class_name: str, left_x: int, top_y: int,
                width: int, height: int, with_percent: bool = True) -> np.ndarray:
     """ Draw bounding boxes with class name on image
 
     :param image: Original image
     :param percent: Percent of confidence
+    :param class_name: Name of class
     :param left_x: x-coordinate of top left corner of bounding box
     :param top_y: y-coordinate of top left corner of bounding box
     :param width: width of bounding box in pixels
@@ -48,9 +49,10 @@ def draw_boxes(image: np.ndarray, percent: str, left_x: int, top_y: int,
     :return: Image with bounding box and class name of object
     """
 
-    text = f'Hallmark: {percent}' if with_percent else 'Hallmark'
+    text = f'{class_name}: {percent}' if with_percent else f'{class_name}'
 
-    image = draw_text_with_background(image, text, (left_x, top_y))
-    image = cv2.rectangle(image, (left_x, top_y), (left_x + width, top_y + height), (255, 0, 255), 2)
+    color = (255, 0, 255) if class_name == 'hallmark' else (255, 255, 0)
+    image = draw_text_with_background(image, text, (left_x, top_y), color)
+    image = cv2.rectangle(image, (left_x, top_y), (left_x + width, top_y + height), color, 2)
 
     return image
