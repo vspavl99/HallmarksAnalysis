@@ -20,7 +20,7 @@ class Configuration:
     path_to_letter_model_weights: str = 'configuration/letter_classification.pth'
     path_to_city_model_weights: str = 'configuration/city_classification.pth'
 
-    path_to_detection_model_weights: str = 'configuration/yolov4-best.weights'
+    path_to_detection_model_weights: str = 'configuration/yolov4.weights'
     path_to_detection_config_file: str = 'configuration/yolov4-obj.cfg'
 
     # Name of the classes for detection
@@ -115,7 +115,7 @@ class HallmarkAnalyser:
         prediction = model(image).squeeze().detach().cpu()
         end = time.time()
 
-        print(f'Classification {type} inference time : {(end - start):.2f} seconds')
+        print(f'Classification {type_of_task} inference time : {(end - start):.2f} seconds')
 
         predicted_class = prediction.argmax()
         predicted_label = labels[predicted_class]
