@@ -26,15 +26,20 @@ class Configuration:
     # Name of the classes for detection
     class_names = ['Hallmark', 'Letter']
 
+    device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 
-def init_classification_model(path_to_weights: str, device: torch.device = 'cpu') -> models.ResNet:
+
+def init_classification_model(config: dataclass, path_to_weights: str) -> models.ResNet:
     """
     The function return object of model with uploaded weights for certain task of classification
 
+
+    :param config: dataclass object with all necessary information
     :param path_to_weights: path to .pth file with weights of model
-    :param device: on which device model should be run 'cpu' or 'cuda'
     :return:
     """
+
+    device = config.device
     model_state = torch.load(path_to_weights, map_location=torch.device(device))
     output_number_of_classes, input_number_of_features = model_state['fc.weight'].shape
 
@@ -52,14 +57,14 @@ def init_classification_model(path_to_weights: str, device: torch.device = 'cpu'
     return model
 
 
-def init_detection_model(path_to_weights: str, path_to_config: str) -> cv2.dnn_DetectionModel:
+def init_detection_model(config: dataclass) -> cv2.dnn_DetectionModel:
     """
     The function return object of model with uploaded weights for detection task
-
-    :param path_to_weights: path to file with weights of model
-    :param path_to_config: path to config file
+    :param config: dataclass object with all necessary information
     :return:
     """
+    path_to_weights = config.path_to_detection_model_weights
+    path_to_config = config.path_to_detection_config_file
 
     net = cv2.dnn.readNet(path_to_weights, path_to_config)
     net.setPreferableBackend(cv2.dnn.DNN_BACKEND_CUDA)
@@ -72,19 +77,18 @@ def init_detection_model(path_to_weights: str, path_to_config: str) -> cv2.dnn_D
 
 
 class HallmarkAnalyser:
-    def __init__(self, models_dict: dict, config: dataclass, device: torch.device):
+    def __init__(self, config: dataclass):
         """
 
-        :param models_dict: dictionary with models
         :param config: class with all configuration parameters
-        :param device: on which device model should be run 'cpu' or 'cuda'
         """
         self.config = config
-        self.device = device
+        self.device = config.device
 
-        self.city_model = models_dict['city_model']
-        self.letter_model = models_dict['letter_model']
-        self.detection_model = models_dict['detection_model']
+        # Initialization of all necessary models
+        self.letter_model = init_classification_model(config, config.path_to_letter_model_weights)
+        self.city_model = init_classification_model(config, config.path_to_city_model_weights)
+        self.detection_model = init_detection_model(config)
 
         # Detection parameters
         self.detection_threshold = 0.2
@@ -127,7 +131,7 @@ class HallmarkAnalyser:
         """
         Function process image of silverware. (detects the hallmark and classify the town and letter)
         :param image: image for hallmark analysis
-        :return:
+        :return: dictionary with keys Detection classes and values tuple of classification classes
         """
         image = cv2.resize(image, (416, 416))
 
@@ -161,24 +165,14 @@ class HallmarkAnalyser:
 
 
 if __name__ == '__main__':
+
     cfg = Configuration()
-    device_for_running = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
-
-    # Initialization of all necessary models
-    letter_model = init_classification_model(cfg.path_to_letter_model_weights, device_for_running)
-    city_model = init_classification_model(cfg.path_to_city_model_weights, device_for_running)
-    detection_model = init_detection_model(cfg.path_to_detection_model_weights, cfg.path_to_detection_config_file)
-
-    model_for_analysis = {
-        'city_model': city_model,
-        'letter_model': letter_model,
-        'detection_model': detection_model
-    }
-
-    analyser = HallmarkAnalyser(model_for_analysis, cfg, device_for_running)
+    analyser = HallmarkAnalyser(cfg)
 
     image_input = cv2.imread('Data/DatasetOriginal/images/5_original.jpg')
     image_output, results = analyser.process_image(image_input)
+
+    print(results)
 
     url = "https://silvermakersmarks.co.uk/Dates/{}/Date%20Letters%20{}.html".format(
         results['Hallmark'][0], results['Letter'][0]
