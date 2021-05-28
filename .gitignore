@@ -3,4 +3,4 @@
 /Data/Classification.zip
 /Models/Detection/weights/yolov4-obj_best.weights
 /Data/ClassificationYear/Chars74kDataset.zip
-/Data/ClassificationCityNew/
+/Data/ClassificationCityNew/*
