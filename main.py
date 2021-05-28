@@ -1,6 +1,7 @@
 import time
 from dataclasses import dataclass
 import matplotlib.pyplot as plt
+import argparse
 
 import cv2
 import numpy as np
@@ -163,7 +164,6 @@ class HallmarkAnalyser:
 
         return image, analysis_results
 
-import argparse
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Process some arguments')
