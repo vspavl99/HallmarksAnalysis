@@ -6,4 +6,4 @@ To run the models on the image, you need to use the main.py file:
 ```
 python main.py --image="Absolute/path/to/image"
 ```
-Some test images can be found in TestImages folder.
+Weights of all models available in configuration folder.
