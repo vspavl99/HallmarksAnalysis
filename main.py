@@ -163,16 +163,29 @@ class HallmarkAnalyser:
 
         return image, analysis_results
 
+import argparse
 
 if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description='Process some arguments')
+    parser.add_argument('--image', type=str, required=False, default='TestImages/0.jpg', help='Path to image')
+
+    args = parser.parse_args()
+    image_path = args.image
 
     cfg = Configuration()
     analyser = HallmarkAnalyser(cfg)
 
-    image_input = cv2.imread('Data/DatasetOriginal/images/5_original.jpg')
+    image_input = cv2.imread(image_path)
+    assert image_input is not None, "Image not found"
+
+    # Change BGR to RGB
+    image_input = cv2.cvtColor(image_input, cv2.COLOR_BGR2RGB)
+
     image_output, results = analyser.process_image(image_input)
 
-    print(results)
+    # Print results of models
+    for key in results.keys():
+        print(f"{key} : {results[key][0]} - {results[key][1]}")
 
     url = "https://silvermakersmarks.co.uk/Dates/{}/Date%20Letters%20{}.html".format(
         results['Hallmark'][0], results['Letter'][0]
