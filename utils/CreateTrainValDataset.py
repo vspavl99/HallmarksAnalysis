@@ -6,7 +6,7 @@ from sklearn.model_selection import train_test_split
 
 def create_train_val_folder_for_classification(path_to_root: str = '../Data/ClassificationCity'):
     for phase in ['train', 'val']:
-        dataframe = pd.read_csv(f'{path_to_root}/city_year_{phase}.csv')
+        dataframe = pd.read_csv(f'{path_to_root}/city_year_new_{phase}.csv')
 
         for _, row in dataframe.iterrows():
             image_name = row['ImageName']
@@ -22,7 +22,7 @@ def create_train_val_folder_for_classification(path_to_root: str = '../Data/Clas
 
 def create_train_val_folder_for_detection(path_to_root: str = 'Data/Detection/yolov4/data'):
     for phase in ['train', 'val']:
-        dataframe = pd.read_csv(f'../Data/ClassificationCity/city_year_{phase}.csv')
+        dataframe = pd.read_csv(f'../Data/ClassificationCity/city_year_new_{phase}.csv')
 
         for _, row in dataframe.iterrows():
             image_name = row['ImageName']
@@ -45,7 +45,7 @@ if __name__ == '__main__':
     # Split data into a train and test
 
     data_frame = pd.read_csv(
-        '../Data/ClassificationCity/CleanedData/city_year.csv', usecols=['ImageName', 'city', 'year']
+        '../Data/ClassificationCityNew/city_year_new.csv', usecols=['ImageName', 'city']
     )
 
     data_frame_train, data_frame_val = train_test_split(
@@ -53,7 +53,7 @@ if __name__ == '__main__':
         stratify=data_frame['city']
     )
 
-    data_frame_train.to_csv('../Data/ClassificationCity/CleanedData/city_year_train.csv', index=False)
-    data_frame_val.to_csv('../Data/ClassificationCity/CleanedData/city_year_val.csv', index=False)
+    data_frame_train.to_csv('../Data/ClassificationCityNew/city_year_new_train.csv', index=False)
+    data_frame_val.to_csv('../Data/ClassificationCityNew/city_year_new_val.csv', index=False)
 
-    create_train_val_folder_for_classification('../Data/ClassificationCity/CleanedData')
+    create_train_val_folder_for_classification('../Data/ClassificationCityNew')
